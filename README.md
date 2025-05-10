@@ -20,7 +20,7 @@ The framework automatically generates high-quality, detailed prompts tailored to
 **Our mission:** Empower users to produce high-quality robust prompts using the power of large language models (LLMs).
 
 # Why Auto Prompt?
-- **Prompt Engineering Challenges.** The quality of LLMs greatly depends on the prompts used. Even [minor changes](#prompt-sensitivity-example) can significantly affect their performance. 
+- **Prompt Engineering Challenges.** The quality of LLMs greatly depends on the prompts used. Even [minor changes](#prompt-sensitivity-example) can significantly affect their performance.
 - **Benchmarking Challenges.**  Creating a benchmark for production-grade prompts is often labour-intensive and time-consuming.
 - **Reliable Prompts.** Auto Prompt generates robust high-quality prompts, offering measured accuracy and performance enhancement using minimal data and annotation steps.
 - **Modularity and Adaptability.** With modularity at its core, Auto Prompt integrates seamlessly with popular open-source tools such as LangChain, Wandb, and Argilla, and can be adapted for a variety of tasks, including data synthesis and prompt migration.
@@ -29,9 +29,9 @@ The framework automatically generates high-quality, detailed prompts tailored to
 
 ![System Overview](./docs/AutoPrompt_Diagram.png)
 
-The system is designed for real-world scenarios, such as moderation tasks, which are often  challenged by imbalanced data distributions. The system implements the [Intent-based Prompt Calibration](https://arxiv.org/abs/2402.03099) method. The process begins with a user-provided initial prompt and task description, optionally including user examples. The refinement process iteratively generates diverse samples, annotates them via user/LLM, and evaluates prompt performance, after which an LLM suggests an improved prompt.  
+The system is designed for real-world scenarios, such as moderation tasks, which are often  challenged by imbalanced data distributions. The system implements the [Intent-based Prompt Calibration](https://arxiv.org/abs/2402.03099) method. The process begins with a user-provided initial prompt and task description, optionally including user examples. The refinement process iteratively generates diverse samples, annotates them via user/LLM, and evaluates prompt performance, after which an LLM suggests an improved prompt.
 
-The optimization process can be extended to content generation tasks by first devising a ranker prompt and then performing the prompt optimization with this learned ranker. The optimization concludes upon reaching the budget or iteration limit.  
+The optimization process can be extended to content generation tasks by first devising a ranker prompt and then performing the prompt optimization with this learned ranker. The optimization concludes upon reaching the budget or iteration limit.
 
 
 This joint synthetic data generation and prompt optimization approach outperform traditional methods while requiring minimal data and iterations. Learn more in our paper
@@ -65,7 +65,7 @@ AutoPrompt requires `python <= 3.10`
 > **Step 1** - Download the project
 
 ```bash
-git clone git@github.com:Eladlev/AutoPrompt.git
+git clone git@github.com:ojima-toinexus/AutoPrompt.git
 cd AutoPrompt
 ```
 
@@ -79,7 +79,7 @@ conda env create -f environment_dev.yml
 conda activate AutoPrompt
 ```
 
-Using pip: 
+Using pip:
 ```bash
 pip install -r requirements.txt
 ```
@@ -92,7 +92,7 @@ pipenv sync
 
 <br />
 
-> **Step 3** - Configure your LLM. 
+> **Step 3** - Configure your LLM.
 
 Set your OpenAI API key  by updating the configuration file `config/llm_env.yml`
 - If you need help locating your API key, visit this [link](https://help.openai.com/en/articles/4936850-where-do-i-find-my-api-key).
@@ -124,7 +124,7 @@ dataset:
 ```
 
 
-For a **classification pipeline**, use the following command from your terminal within the appropriate working directory: 
+For a **classification pipeline**, use the following command from your terminal within the appropriate working directory:
 ```bash
 python run_pipeline.py
 ```
@@ -135,17 +135,17 @@ python run_pipeline.py \
     --task_description "Assistant is an expert classifier that will classify a movie review, and let the user know if it contains a spoiler for the reviewed movie or not." \
     --num_steps 30
 ```
-You can track the optimization progress using the [W&B](https://wandb.ai/site) dashboard, with setup instructions available  [here](docs/installation.md#monitoring-weights-and-biases-setup). 
+You can track the optimization progress using the [W&B](https://wandb.ai/site) dashboard, with setup instructions available  [here](docs/installation.md#monitoring-weights-and-biases-setup).
 
 
 If you are using pipenv, be sure to activate the environment:
 ``` bash
 pipenv shell
-python run_pipeline.py  
+python run_pipeline.py
 ```
 or alternatively prefix your command with `pipenv run`:
 ```bash
-pipenv run python run_pipeline.py 
+pipenv run python run_pipeline.py
 ```
 
 #### Generation pipeline
@@ -155,7 +155,7 @@ python run_generation_pipeline.py \
     --prompt "Write a good and comprehensive movie review about a specific movie." \
     --task_description "Assistant is a large language model that is tasked with writing movie reviews."
 ```
-For more information, refer to our [generation task example](docs/examples.md#generating-movie-reviews-generation-task). 
+For more information, refer to our [generation task example](docs/examples.md#generating-movie-reviews-generation-task).
 
 <br />
 
@@ -172,7 +172,7 @@ stored in the default `dump` path.
 - The framework supports checkpoints for easy resumption of optimization from the last saved state. It automatically saves the most recent optimization state in a `dump` path. Use `--output_dump` to set this path and `--load_path` to resume from a checkpoint.
 - The iterations include multiple calls to the LLM service, with long prompts and requests for a relatively large amount of generated tokens by the LLM. This might take time ~1 minute (especially in the generative tasks), so please be patient.
 - If there are some issues with the Argilla server connection/error, try to restart the space.
-<!-- 
+<!--
 Meanwhile, the num_initialize_samples and num_generated_samples fields within the meta_prompts section specify the counts for initial and per iteration sample generation, respectively. -->
 
 
@@ -192,17 +192,17 @@ Surprisingly, the second prompt scores 72, representing an 11% drop in accuracy.
 Your contributions are greatly appreciated! If you're eager to contribute, kindly refer to our [Contributing Guidelines](docs/contributing.md)) for detailed information.
 
 <!-- For an insight into our future plans, visit our Project Roadmap. -->
-If you wish to be a part of our journey, we invite you to connect with us through our [Discord Community](https://discord.gg/G2rSbAf8uP). We're excited to have you onboard! 
+If you wish to be a part of our journey, we invite you to connect with us through our [Discord Community](https://discord.gg/G2rSbAf8uP). We're excited to have you onboard!
 
 ## 🛡 Disclaimer
 
-The AutoPrompt project is provided on an "as-is" basis without any guarantees or warranties, expressed or implied. 
+The AutoPrompt project is provided on an "as-is" basis without any guarantees or warranties, expressed or implied.
 
 Our perspective on the optimization and usage of prompts:
 
 1. The core objective of AutoPrompt is to refine and perfect prompts to achieve high-quality results. This is achieved through an iterative calibration process, which helps in reducing errors and enhancing the performance of LLMs. However, the framework does not guarantee absolute correctness or unbiased results in every instance.
 
-2. AutoPrompt aims to improve the reliability of prompts and mitigate sensitivity issues, but it does not claim to completely eliminate such issues. 
+2. AutoPrompt aims to improve the reliability of prompts and mitigate sensitivity issues, but it does not claim to completely eliminate such issues.
 <!-- Our community is committed to exploring the most effective ways to interact with LLMs, fostering a space for diverse views and approaches. -->
 
 Please note that using LLMs like OpenAI's GPT-4, supported by AutoPrompt, may lead to significant costs due to token usage. By using AutoPrompt, you acknowledge your responsibility to monitor and manage your token use and expenses. We advise regularly reviewing your LLM provider's API usage and establishing limits or alerts to prevent unexpected charges.
